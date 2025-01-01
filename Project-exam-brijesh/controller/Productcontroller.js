@@ -1,7 +1,7 @@
 const { log } = require('console');
 const ProductModel = require('../Models/ProductModel') 
  const fs = require('fs')
-
+const Cratmodel = require('../Models/Addtocrat')
 const ProductData = async(req , res) =>{
     const {name,price ,qty , description} = req.body;
      const image = req.file.path
@@ -27,9 +27,9 @@ const deleteproduct = async(req , res) =>{
     try {
         let single = await ProductModel.findById(id)
         fs.unlinkSync(single.Image)
-     await ProductModel.findByIdAndDelete(id);
+        await ProductModel.findByIdAndDelete(id);
 
-     
+      
       
        return res.redirect('/Product/viewProduct');
 
@@ -96,5 +96,44 @@ const updateProductData = async (req, res) =>{
     }
  
 }
+const AddtoCrat = async (req, res) =>{
+    try {
+        const id =req.query.id;
+        const Productaddtocrat = await ProductModel.findById(id);
+         console.log(Productaddtocrat);
+            await Cratmodel.create({
+            name:Productaddtocrat.name,
+            Price:Productaddtocrat.Price,
+            qt:Productaddtocrat.qt,
+            description:Productaddtocrat.description,
+            Image:Productaddtocrat.Image
 
-module.exports =  {ProductData , viewProduct, deleteproduct , Productedit , updateProductData}
+         });
+         return res.redirect('/Product/viewProduct');     
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
+}
+const AddtoCratview =async (req, res) =>{
+    try {
+           const Cratitem = await Cratmodel.find({});
+                 console.log(Cratitem);
+                 return res.render('ProductAddcart',{Cratmodel: Cratitem});
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
+}
+const deletecart =  async (req, res) =>{
+    try {
+        const id = req.query.id;
+        await Cratmodel.findByIdAndDelete(id);
+      
+         return res.redirect('/Product/AddtoCratview');     
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
+}
+module.exports =  {ProductData , viewProduct, deleteproduct , Productedit , updateProductData , AddtoCrat , AddtoCratview , deletecart}

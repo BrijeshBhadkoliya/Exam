@@ -1,6 +1,6 @@
 const express = require('express');
 const {Product } = require('../controller/authcontroller');
-const {ProductData , viewProduct , deleteproduct , Productedit , updateProductData} =  require('../controller/Productcontroller');
+const {ProductData , viewProduct , deleteproduct , Productedit , updateProductData , AddtoCrat , AddtoCratview , deletecart} =  require('../controller/Productcontroller');
 const multer = require('multer');
  
 const Router = express.Router()
@@ -23,8 +23,12 @@ Router.get('/viewProduct',viewProduct )
 Router.get('/deleteproduct' ,deleteproduct)
 Router.get('/Productedit' ,Productedit)
 Router.post('/updateProductData',upload,updateProductData )
+Router.get('/AddtoCrat' ,AddtoCrat)
+Router.get('/AddtoCratview' ,AddtoCratview)
+Router.get('/deletecart' ,deletecart)
 
 
+deletecart
 
 
 

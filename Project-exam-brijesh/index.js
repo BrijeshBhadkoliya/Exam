@@ -25,7 +25,7 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(passport.setUser);
-
+ 
 
 const path = require('path')
 app.use("/uploads",express.static(path.join(__dirname,"uploads")))
